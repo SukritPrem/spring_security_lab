@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+  app:
+    image: 'docker-spring-boot'
+    build:
+      context: .
+    container_name: app
+    ports:
+      - 8090:8090
+    depends_on:
+      - postgres
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/user_ticket
+#      - SPRING_DATASOURCE_USERNAME=user
+#      - SPRING_DATASOURCE_PASSWORD=password
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+#  db:
+#    image: 'postgres:latest'
+#    container_name: db
+#    environment:
+#      - POSTGRES_DB=user_ticket
+#      - POSTGRES_USER=user
+#      - POSTGRES_PASSWORD=password
+#    ports:
+#      - 5432:5432
+#    volumes:
+#      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  postgres:
+    image: postgres:16 # Use the latest PostgreSQL 16 image
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: my_database # Use the database name from your CREATE DATABASE statement
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
